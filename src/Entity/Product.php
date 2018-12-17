@@ -384,6 +384,16 @@ class Product
     }
 
     /**
+     * Set the date when the product have been created.
+     *
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
      * Get the date when the product have been created.
      *
      * @return \DateTime
