@@ -1,0 +1,8 @@
+parameters:
+    router.request_context.host: 'easyadmin-bench.alterphp.com'
+    router.request_context.scheme: https
+
+framework:
+    router:
+        strict_requirements: ~
+        utf8: true

@@ -1,0 +1,47 @@
+version: '3.2'
+
+services:
+
+    php:
+        image: lephare/php:7.2
+        user: "${UID:-1000}:${GID:-1000}"
+        volumes:
+            - ./:/var/www/symfony
+            - $HOME/.ssh:/var/www/.ssh
+        networks:
+            - default
+            - database
+            - maildev
+            - memcached
+        environment:
+            COMPOSER_HOME: /tmp
+            TRUSTED_PROXIES: 172.17.0.0/8,127.0.0.1
+
+    web:
+        image: lephare/apache:2.4
+        volumes:
+            - ./:/var/www/symfony
+            - ./var/log/apache:/var/log/apache2
+        networks:
+            - default
+            - proxy
+        environment:
+            VIRTUAL_HOST: easyadmin-bench.alterphp.com
+            CERT_NAME: generic
+            DOCUMENT_ROOT: /var/www/symfony/public
+            # HTTPS_METHOD: noredirect
+
+networks:
+
+    proxy:
+        external:
+            name: dev_proxy
+    maildev:
+        external:
+            name: dev_maildev
+    database:
+        external:
+            name: dev_database
+    memcached:
+        external:
+            name: dev_memcached
